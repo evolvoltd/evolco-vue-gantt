@@ -188,11 +188,11 @@ export default class Bar {
             this.gantt.unselect_all();
             this.group.classList.toggle('active');
 
-            this.show_popup();
+            this.show_popup(e);
         });
     }
 
-    show_popup() {
+    show_popup(e) {
         if (this.gantt.bar_being_dragged) return;
 
         const start_date = date_utils.format(this.task._start, 'MMM D');
@@ -206,7 +206,8 @@ export default class Bar {
             target_element: this.$bar,
             title: this.task.name,
             subtitle: subtitle,
-            task: this.task
+            task: this.task,
+            event: e
         });
     }
 
