@@ -182,6 +182,7 @@ export default class Bar {
             }
 
             if (e.type === 'click') {
+                this.task.event = e;
                 this.gantt.trigger_event('click', [this.task]);
             }
 

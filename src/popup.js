@@ -41,21 +41,20 @@ export default class Popup {
         }
 
         // set position
-        let position_meta;
-        if (target_element instanceof HTMLElement) {
-            position_meta = target_element.getBoundingClientRect();
-        } else if (target_element instanceof SVGElement) {
-            position_meta = options.target_element.getBBox();
-        }
+        // let position_meta;
+        // if (target_element instanceof HTMLElement) {
+        //     position_meta = target_element.getBoundingClientRect();
+        // } else if (target_element instanceof SVGElement) {
+        //     position_meta = options.target_element.getBBox();
+        // }
 
         if (options.position === 'left') {
-            this.parent.style.left =
-                position_meta.x + (position_meta.width + 10) + 'px';
-            this.parent.style.top = position_meta.y + 'px';
+            this.parent.style.left = options.event.offsetX + 'px';
+            this.parent.style.top = options.event.offsetY + 'px';
 
-            this.pointer.style.transform = 'rotateZ(90deg)';
-            this.pointer.style.left = '-7px';
-            this.pointer.style.top = '2px';
+            this.pointer.style.transform = 'rotateZ(180deg)';
+            this.pointer.style.left = '5px';
+            this.pointer.style.top = '-11px';
         }
 
         // show
