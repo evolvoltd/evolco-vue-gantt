@@ -40,17 +40,10 @@ export default class Popup {
             this.parent.style.width = this.parent.clientWidth + 'px';
         }
 
-        // set position
-        // let position_meta;
-        // if (target_element instanceof HTMLElement) {
-        //     position_meta = target_element.getBoundingClientRect();
-        // } else if (target_element instanceof SVGElement) {
-        //     position_meta = options.target_element.getBBox();
-        // }
-
         if (options.position === 'left') {
             this.parent.style.left = options.event.offsetX + 'px';
-            this.parent.style.top = options.event.offsetY + 'px';
+            const _top = parseInt(options.event.offsetY) + 10;
+            this.parent.style.top = _top + 'px';
 
             this.pointer.style.transform = 'rotateZ(180deg)';
             this.pointer.style.left = '5px';
