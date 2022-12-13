@@ -1,6 +1,6 @@
 {
-  "name": "vue-frappe-gantt",
-  "version": "0.3.4",
+  "name": "evolco-vue-gantt",
+  "version": "1.0.0",
   "description": "A simple, modern, interactive gantt library for vue",
   "main": "src/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FonteSolutions/gantt.git"
+    "url": "https://github.com/evolvoltd/evolco-vue-gantt"
   },
   "keywords": [
     "gantt",
@@ -27,9 +27,9 @@
   "author": "Faris Ansari",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FonteSolutions/gantt/issues"
+    "url": "https://github.com/evolvoltd/evolco-vue-gantt/issues"
   },
-  "homepage": "https://github.com/FonteSolutions/gantt",
+  "homepage": "https://github.com/evolvoltd/evolco-vue-gantt",
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
     "deepmerge": "^2.0.1",
