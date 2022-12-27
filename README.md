@@ -9,11 +9,6 @@
     </p>
 </div>
 
-<p align="center">
-    <a href="https://frappe.github.io/gantt">
-        <img src="https://cloud.githubusercontent.com/assets/9355208/21537921/4a38b194-cdbd-11e6-8110-e0da19678a6d.png">
-    </a>
-</p>
 
 ### Install
 ```
@@ -31,33 +26,42 @@ And start hacking:
 ```js
 var tasks = [
   {
+    row_id: 1, // Allows to match task/tasks with the speciffic row
     id: 'Task 1',
     name: 'Redesign website',
     start: '2016-12-28',
     end: '2016-12-31',
-    progress: 20,
-    dependencies: 'Task 2, Task 3',
-    custom_class: 'bar-milestone' // optional
-  },
-  ...
-]
-var gantt = new Gantt("#gantt", tasks);
+    progress: 20, // optional 
+    dependencies: 'Task 2, Task 3', // optional (needs debugging)
+    custom_class: 'bar-milestone', // optional 
+    draggable: false, // Disables all functionalities related to dragging (bar dragging, bar or 
+    // process width adjustments) 
+  },...]
+
+var rows = [] // Required to generate multiple rows and for left_header_label and 
+// left_column_label options. E.g.: rows = users = [{id:1, full_name: 'John Smith'},...]
+
+var gantt = new Gantt("#gantt", tasks, rows);
 ```
 
 You can also pass various options to the Gantt constructor:
 ```js
-var gantt = new Gantt("#gantt", tasks, {
+var gantt = new Gantt("#gantt", tasks, rows, {
     header_height: 50,
     column_width: 30,
     step: 24,
-    view_modes: ['Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
+    view_modes: ['Hour', 'Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
     bar_height: 20,
     bar_corner_radius: 3,
     arrow_curve: 5,
     padding: 18,
     view_mode: 'Day',   
     date_format: 'YYYY-MM-DD',
-    custom_popup_html: null
+    custom_popup_html: null,
+    left_header_label: 'Users', 
+    left_column_label: 'full_name',
+    onBarClick: yourFunction, // Create your function which will be executed on bar click
+    // it has access to task and event. E.g.: yourFunction(task, event) {console.log(task, event)}
 });
 ```
 
@@ -71,4 +75,4 @@ If you want to contribute:
 License: MIT
 
 ------------------
-Project maintained by [frappe](https://github.com/frappe)
+Project maintained by [frappé](https://github.com/frappe)

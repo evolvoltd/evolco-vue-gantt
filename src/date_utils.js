@@ -21,33 +21,19 @@ const month_names = {
         'November',
         'December'
     ],
-    ru: [
-        'Январь',
-        'Февраль',
-        'Март',
-        'Апрель',
-        'Май',
-        'Июнь',
-        'Июль',
-        'Август',
-        'Сентябрь',
-        'Октябрь',
-        'Ноябрь',
-        'Декабрь'
-    ],
-    ptBr: [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro'
+    lt: [
+        'Sausis',
+        'Vasaris',
+        'Kovas',
+        'Balandis',
+        'Gegužė',
+        'Birželis',
+        'Liepa',
+        'Rugpjūtis',
+        'Rugsėjis',
+        'Spalis',
+        'Lapkritis',
+        'Gruodis'
     ]
 };
 
@@ -152,7 +138,6 @@ export default {
         if (!scale.endsWith('s')) {
             scale += 's';
         }
-
         return Math.floor(
             {
                 milliseconds,
@@ -162,8 +147,8 @@ export default {
                 days,
                 months,
                 years
-            }[scale]
-        );
+            }[scale]*10
+        )/10;
     },
 
     today() {
