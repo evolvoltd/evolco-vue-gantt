@@ -1,8 +1,12 @@
+import { format } from 'date-fns';
+
 export default class Popup {
     constructor(parent, custom_html) {
         this.parent = parent;
         this.custom_html = custom_html;
         this.make();
+        this.hide();
+
     }
 
     make() {
@@ -11,8 +15,6 @@ export default class Popup {
             <div class="subtitle"></div>
             <div class="pointer"></div>
         `;
-
-        this.hide();
 
         this.title = this.parent.querySelector('.title');
         this.subtitle = this.parent.querySelector('.subtitle');
@@ -26,7 +28,7 @@ export default class Popup {
         if (!options.position) {
             options.position = 'left';
         }
-        const target_element = options.target_element;
+        // const target_element = options.target_element;
 
         if (this.custom_html) {
             let html = this.custom_html(options.task);
@@ -36,7 +38,9 @@ export default class Popup {
         } else {
             // set data
             this.title.innerHTML = options.title;
-            this.subtitle.innerHTML = options.subtitle;
+            const taskStart = format(new Date(options.task.start), 'yyyy-MM-dd HH:mm')
+            const taskEnd = format(new Date(options.task.end), 'yyyy-MM-dd HH:mm')
+            this.subtitle.innerHTML = `${taskStart} - ${taskEnd}`;
             this.parent.style.width = this.parent.clientWidth + 'px';
         }
 
@@ -46,15 +50,15 @@ export default class Popup {
             this.parent.style.top = _top + 'px';
 
             this.pointer.style.transform = 'rotateZ(180deg)';
-            this.pointer.style.left = '5px';
+            this.pointer.style.left = '158px';
             this.pointer.style.top = '-11px';
         }
 
         // show
-        this.parent.style.opacity = 1;
+        this.parent.style.display = '';
     }
 
     hide() {
-        this.parent.style.opacity = 0;
+        this.parent.style.display = 'none';
     }
 }

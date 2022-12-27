@@ -21,6 +21,8 @@ export default class Bar {
     }
 
     prepare_values() {
+        this.draggable = this.task.draggable;
+
         this.invalid = this.task.invalid;
         this.height = this.gantt.options.bar_height;
         this.x = this.compute_x();
@@ -30,6 +32,7 @@ export default class Bar {
             date_utils.diff(this.task._end, this.task._start, 'hour') /
             this.gantt.options.step;
         this.width = this.gantt.options.column_width * this.duration;
+
         this.progress_width =
             this.gantt.options.column_width *
                 this.duration *
@@ -87,6 +90,10 @@ export default class Bar {
 
         animateSVG(this.$bar, 'width', 0, this.width);
 
+        if (this.draggable) {
+            this.$bar.classList.add('bar-draggable');
+        }
+
         if (this.invalid) {
             this.$bar.classList.add('bar-invalid');
         }
@@ -109,19 +116,38 @@ export default class Bar {
     }
 
     draw_label() {
-        createSVG('text', {
+        if(this.width / 6 > this.task.name.length) {
+          createSVG('text', {
             x: this.x + this.width / 2,
             y: this.y + this.height / 2,
             innerHTML: this.task.name,
             class: 'bar-label',
             append_to: this.bar_group
-        });
+          });
+        } else if (6 < (this.width / 6) && (this.width / 6) < this.task.name.length) {
+          createSVG('text', {
+            x: this.x + this.width / 2,
+            y: this.y + this.height / 2,
+            innerHTML: this.task.name.substring(0, this.width/8) + '...',
+            class: 'bar-label',
+            append_to: this.bar_group
+          });
+        } else {
+          createSVG('text', {
+            x: this.x + this.width / 2,
+            y: this.y + this.height / 2,
+            innerHTML: '',
+            class: 'bar-label',
+            append_to: this.bar_group
+          });
+        }
+
         // labels get BBox in the next tick
         requestAnimationFrame(() => this.update_label_position());
     }
 
     draw_resize_handles() {
-        if (this.invalid) return;
+        if (this.invalid || !this.draggable) return;
 
         const bar = this.$bar;
         const handle_width = 8;
@@ -175,31 +201,34 @@ export default class Bar {
     }
 
     setup_click_event() {
-        $.on(this.group, 'focus ' + this.gantt.options.popup_trigger, e => {
+        $.on(this.group, 'click ' + this.gantt.options.popup_trigger, e => {
             if (this.action_completed) {
                 // just finished a move action, wait for a few seconds
                 return;
             }
 
-            if (e.type === 'click') {
-                this.task.event = e;
-                this.gantt.trigger_event('click', [this.task]);
-            }
+            // if (e.type === 'click') {
+            //     this.task.event = e;
+            //     this.gantt.trigger_event('click', [this.task]);
+            // }
 
-            this.gantt.unselect_all();
-            this.group.classList.toggle('active');
+            // this.gantt.unselect_all();
+            // this.group.classList.toggle('active'); // disabled for barClickFn purpose
 
             this.show_popup(e);
         });
     }
 
     show_popup(e) {
-        if (this.gantt.bar_being_dragged) return;
+      if (this.gantt.bar_being_dragged) return;
+      this.gantt.options.onBarClick(this.task, event);
 
-        const start_date = date_utils.format(this.task._start, 'MMM D');
+
+
+       /* const start_date = date_utils.format(this.task._start, 'MMM D', this.gantt.options.language);
         const end_date = date_utils.format(
             date_utils.add(this.task._end, -1, 'second'),
-            'MMM D'
+            'MMM D', this.gantt.options.language
         );
         const subtitle = start_date + ' - ' + end_date;
 
@@ -209,7 +238,7 @@ export default class Bar {
             subtitle: subtitle,
             task: this.task,
             event: e
-        });
+        });*/ // disabled for barClickFn purpose
     }
 
     update_bar_position({ x = null, width = null }) {
@@ -402,10 +431,10 @@ export default class Bar {
     }
 }
 
-function isFunction(functionToCheck) {
-    var getType = {};
-    return (
-        functionToCheck &&
-        getType.toString.call(functionToCheck) === '[object Function]'
-    );
-}
+// function isFunction(functionToCheck) {
+//     var getType = {};
+//     return (
+//         functionToCheck &&
+//         getType.toString.call(functionToCheck) === '[object Function]'
+//     );
+// }
