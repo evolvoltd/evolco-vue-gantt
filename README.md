@@ -1,10 +1,7 @@
 <div align="center">
-    <img src="https://github.com/frappe/design/blob/master/logos/gantt-logo.svg" height="128">
-    <h2>Frappe Gantt</h2>
+    <h2>Evolco Gantt</h2>
     <p align="center">
-        <p>A simple, interactive, modern gantt chart library for the web</p>
-        <a href="https://frappe.github.io/gantt">
-            <b>View the demo »</b>
+        <p>Modification of frappé gantt library</p>
         </a>
     </p>
 </div>
@@ -12,7 +9,7 @@
 
 ### Install
 ```
-npm install frappe-gantt
+npm install evolco-vue-gantt
 ```
 
 ### Usage
@@ -75,4 +72,4 @@ If you want to contribute:
 License: MIT
 
 ------------------
-Project maintained by [frappé](https://github.com/frappe)
+

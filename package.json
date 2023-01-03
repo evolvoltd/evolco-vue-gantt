@@ -1,7 +1,7 @@
 {
   "name": "evolco-vue-gantt",
-  "version": "2.0.0",
-  "description": "A simple, modern, interactive gantt library for vue",
+  "version": "2.0.1",
+  "description": "Modification of the frappe gantt",
   "main": "src/index.js",
   "scripts": {
     "start": "yarn run dev",
@@ -24,7 +24,6 @@
     "interactive gantt",
     "project management"
   ],
-  "author": "Faris Ansari",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/evolvoltd/evolco-vue-gantt/issues"

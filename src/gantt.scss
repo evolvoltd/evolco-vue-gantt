@@ -1,4 +1,4 @@
-$bar-color: #90CAF9 !default;
+$$bar-color: #90CAF9 !default;
 $bar-stroke: #8D99A6 !default;
 $border-color: #e0e0e0 !default;
 $light-bg: #f5f5f5 !default;
@@ -50,13 +50,17 @@ $handle-color: #ddd !default;
 
 	.bar {
 		fill: $bar-color;
-		stroke: $bar-stroke;
-		stroke-width: 0;
+		//stroke: $bar-stroke;
+		stroke: $bar-progress;
+		stroke-width: 1;
 		transition: stroke-width .3s ease;
 		user-select: none;
+
+
 	}
 	.bar-progress {
 		fill: $bar-progress;
+		stroke: none;
 	}
 	.bar-invalid {
 		fill: transparent;
@@ -70,10 +74,12 @@ $handle-color: #ddd !default;
 	}
 	.bar-label {
 		fill: #fff;
+		fill: rgba(0, 0, 0, 0.87);
 		dominant-baseline: central;
 		text-anchor: middle;
 		font-size: 0.75rem;
-		font-weight: lighter;
+		font-weight: normal;
+		stroke: none;
 
 		&.big {
 			fill: $text-light;
@@ -95,11 +101,11 @@ $handle-color: #ddd !default;
 
 		&:hover {
 			.bar {
-				fill: darken($bar-color, 5);
+				fill: darken($bar-color, 10);
 			}
 
 			.bar-progress {
-				fill: darken($bar-progress, 5);
+				fill: darken($bar-progress, 10);
 			}
 
 			.handle {
@@ -110,11 +116,12 @@ $handle-color: #ddd !default;
 
 		&.active {
 			.bar {
-				fill: darken($bar-color, 5);
+				fill: darken($bar-color, 10);
+
 			}
 
 			.bar-progress {
-				fill: darken($bar-progress, 5);
+				fill: darken($bar-progress, 10);
 			}
 		}
 	}
@@ -147,7 +154,7 @@ $handle-color: #ddd !default;
 	overflow: auto;
 	font-size: 0.875rem;
 	margin-bottom: 30px;
-	max-height: 500px;
+	max-height: 400px;
 
 	.table-head-row {
 		color: rgba(0, 0, 0, 0.6);

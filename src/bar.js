@@ -143,7 +143,7 @@ export default class Bar {
         }
 
         // labels get BBox in the next tick
-        requestAnimationFrame(() => this.update_label_position());
+        // requestAnimationFrame(() => this.update_label_position());
     }
 
     draw_resize_handles() {
