@@ -1,6 +1,6 @@
 {
   "name": "evolco-vue-gantt",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Modification of the frappe gantt",
   "main": "src/index.js",
   "scripts": {

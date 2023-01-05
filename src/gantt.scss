@@ -11,6 +11,8 @@ $bar-progress: #1976d2 !default;
 $handle-color: #ddd !default;
 
 .gantt {
+	flex: none;
+
 	.grid-background {
 		fill: none;
 	}
@@ -18,7 +20,6 @@ $handle-color: #ddd !default;
 		fill: #ffffff;
 		stroke: $border-color;
 		stroke-width: 1.5;
-
 	}
 	.grid-row {
 		fill: #ffffff;
@@ -35,19 +36,16 @@ $handle-color: #ddd !default;
 		&.thick {
 			stroke-width: 0.4;
 		}
-
 	}
 	.today-highlight {
 		fill: $light-green;
 		opacity: 0.5;
 	}
-
 	.arrow {
 		fill: none;
 		stroke: $text-muted;
 		stroke-width: 1.4;
 	}
-
 	.bar {
 		fill: $bar-color;
 		//stroke: $bar-stroke;
@@ -55,8 +53,6 @@ $handle-color: #ddd !default;
 		stroke-width: 1;
 		transition: stroke-width .3s ease;
 		user-select: none;
-
-
 	}
 	.bar-progress {
 		fill: $bar-progress;
@@ -86,7 +82,6 @@ $handle-color: #ddd !default;
 			text-anchor: start;
 		}
 	}
-
 	.handle {
 		fill: $handle-color;
 		cursor: ew-resize;
@@ -94,7 +89,6 @@ $handle-color: #ddd !default;
 		visibility: hidden;
 		transition: opacity .3s ease;
 	}
-
 	.bar-wrapper {
 		cursor: pointer;
 		outline: none;
@@ -103,49 +97,38 @@ $handle-color: #ddd !default;
 			.bar {
 				fill: darken($bar-color, 10);
 			}
-
 			.bar-progress {
 				fill: darken($bar-progress, 10);
 			}
-
 			.handle {
 				visibility: visible;
 				opacity: 1;
 			}
 		}
-
 		&.active {
 			.bar {
 				fill: darken($bar-color, 10);
 
 			}
-
 			.bar-progress {
 				fill: darken($bar-progress, 10);
 			}
 		}
 	}
-
 	.lower-text, .upper-text {
 		fill: rgba(0, 0, 0, 0.6);
 		font-weight: bold;
 		font-size: 0.75rem;
 	}
-
 	.upper-text {
 		text-anchor: middle;
 	}
 	.lower-text {
 		text-anchor: start;
 	}
-
 	.hide {
 		display: none;
 	}
-}
-
-.gantt {
-	flex:none;
 }
 
 .gantt-container {
@@ -153,15 +136,13 @@ $handle-color: #ddd !default;
 	display: flex;
 	overflow: auto;
 	font-size: 0.875rem;
-	margin-bottom: 30px;
-	max-height: 400px;
+	max-height: 62vh;
 
 	.table-head-row {
 		color: rgba(0, 0, 0, 0.6);
 		font-weight: bold;
 		font-size: 0.75rem;
 	}
-
 	table {
 		background-color: #ffffff;
 		border: 1.5px solid $border-color;
@@ -172,23 +153,19 @@ $handle-color: #ddd !default;
 		position: sticky;
 		z-index: 1;
 	}
-
 	.table-head-row {
 		background-color: $border-color;
 		position: sticky;
 		top: 0;
 	}
-
 	.table-data {
 		border-bottom: 0.2px solid $light-border-color;
 		border-top: 0.2px solid $light-border-color;
 		padding: 0 10px;
 	}
-
 	.table-row:nth-child(odd) {
 		background-color: $light-bg;;
 	}
-
 	.popup-wrapper {
 		position: absolute;
 		top: 0;
@@ -203,12 +180,10 @@ $handle-color: #ddd !default;
 			border-bottom: 3px solid $bar-color;
 			padding: 10px;
 		}
-
 		.subtitle {
 			padding: 10px;
 			color: #dfe2e5;
 		}
-
 		.pointer {
 			position: absolute;
 			height: 5px;
