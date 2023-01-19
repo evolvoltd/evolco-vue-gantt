@@ -138,7 +138,7 @@ export default {
         if (!scale.endsWith('s')) {
             scale += 's';
         }
-        return Math.floor(
+        return Number(
             {
                 milliseconds,
                 seconds,
