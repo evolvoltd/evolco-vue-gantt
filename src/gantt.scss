@@ -32,9 +32,9 @@ $handle-color: #ddd !default;
 	}
 	.tick {
 		stroke: $border-color;
-		stroke-width: 0.2;
+		stroke-width: 1;
 		&.thick {
-			stroke-width: 0.4;
+			stroke-width: 2;
 		}
 	}
 	.today-highlight {
@@ -136,7 +136,7 @@ $handle-color: #ddd !default;
 	display: flex;
 	overflow: auto;
 	font-size: 0.875rem;
-	max-height: 62vh;
+	max-height: 70vh;
 
 	.table-head-row {
 		color: rgba(0, 0, 0, 0.6);
@@ -164,7 +164,7 @@ $handle-color: #ddd !default;
 		padding: 0 10px;
 	}
 	.table-row:nth-child(odd) {
-		background-color: $light-bg;;
+		background-color: $light-bg;
 	}
 	.popup-wrapper {
 		position: absolute;
