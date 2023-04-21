@@ -153,10 +153,10 @@ export default class Gantt {
 
             // if hours is not set, assume the last day is full day
             // e.g: 2018-09-09 becomes 2018-09-09 23:59:59
-            const task_end_values = date_utils.get_date_values(task._end);
-            if (task_end_values.slice(3).every(d => d === 0)) {
-                task._end = date_utils.add(task._end, 24, 'hour');
-            }
+            // const task_end_values = date_utils.get_date_values(task._end);
+            // if (task_end_values.slice(3).every(d => d === 0)) {
+            //     task._end = date_utils.add(task._end, 24, 'hour');
+            // }
 
             // invalid flag
             if (!task.start || !task.end) {
