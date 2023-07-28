@@ -280,8 +280,8 @@ export default class Gantt {
             this.gantt_start = date_utils.add(this.gantt_start, -6, 'month');
             this.gantt_end = date_utils.add(this.gantt_end, 6, 'month');
         } else if (this.view_is(['Year'])) {
-            this.gantt_start = date_utils.add(this.gantt_start, -1, 'year');
-            this.gantt_end = date_utils.add(this.gantt_end, 1, 'year');
+            this.gantt_start = date_utils.add(this.gantt_start, -10, 'year');
+            this.gantt_end = date_utils.add(this.gantt_end, 10, 'year');
         } else {
             this.gantt_start = date_utils.add(this.gantt_start, -7, 'day');
             this.gantt_end = date_utils.add(this.gantt_end, 7, 'day');
