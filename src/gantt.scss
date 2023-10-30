@@ -36,6 +36,9 @@ $handle-color: #ddd !default;
 		&.thick {
 			stroke-width: 2;
 		}
+		&.thick-year {
+			stroke: $text-color;
+		}
 	}
 	.today-highlight {
 		fill: $light-green;
@@ -124,7 +127,7 @@ $handle-color: #ddd !default;
 		text-anchor: middle;
 	}
 	.lower-text {
-		text-anchor: start;
+		text-anchor: middle;
 	}
 	.hide {
 		display: none;

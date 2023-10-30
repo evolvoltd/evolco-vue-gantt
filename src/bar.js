@@ -329,15 +329,21 @@ export default class Bar {
         const { step, column_width } = this.gantt.options;
         const task_start = this.task._start;
         const gantt_start = this.gantt.gantt_start;
-
-        const diff = date_utils.diff(task_start, gantt_start, 'hour');
-        let x = diff / step * column_width;
+        let x;
 
         if (this.gantt.view_is('Month')) {
             const diff = date_utils.diff(task_start, gantt_start, 'day');
-            x = diff * column_width / 30;
+            x = (diff * column_width) / 30;
+        } else if (this.gantt.view_is('Year')) {
+            // number 4.5 is hardcoded to push bars start slightly right
+            const diff = date_utils.diff(task_start, gantt_start, 'month') + 4.5;
+            x = (diff * column_width) / 12;
+        } else {
+            const diff = date_utils.diff(task_start, gantt_start, 'hour');
+            x = (diff / step) * column_width;
         }
-        return x;
+
+        return Math.round(x);
     }
 
     compute_y() {

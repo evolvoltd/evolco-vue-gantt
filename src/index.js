@@ -153,10 +153,10 @@ export default class Gantt {
 
             // if hours is not set, assume the last day is full day
             // e.g: 2018-09-09 becomes 2018-09-09 23:59:59
-            // const task_end_values = date_utils.get_date_values(task._end);
-            // if (task_end_values.slice(3).every(d => d === 0)) {
-            //     task._end = date_utils.add(task._end, 24, 'hour');
-            // }
+            const task_end_values = date_utils.get_date_values(task._end);
+            if (task_end_values.slice(3).every((d) => d === 0)) {
+                task._end = date_utils.add(task._end, 24, 'hour');
+            }
 
             // invalid flag
             if (!task.start || !task.end) {
@@ -221,14 +221,14 @@ export default class Gantt {
         if (view_mode === 'Hour') {
             this.options.step = 24 / 24;
             this.options.column_width = 38;
-        } else if (view_mode === 'Day') {
-            this.options.step = 24;
-            this.options.column_width = 38;
         } else if (view_mode === 'Half Day') {
             this.options.step = 24 / 2;
             this.options.column_width = 38;
         } else if (view_mode === 'Quarter Day') {
             this.options.step = 24 / 4;
+            this.options.column_width = 38;
+        } else if (view_mode === 'Day') {
+            this.options.step = 24;
             this.options.column_width = 38;
         } else if (view_mode === 'Week') {
             this.options.step = 24 * 7;
@@ -264,24 +264,12 @@ export default class Gantt {
         this.gantt_end = date_utils.start_of(this.gantt_end, 'day');
 
         // add date padding on both sides
-        if (this.view_is(['Hour'])) {
-            this.gantt_start = date_utils.add(this.gantt_start,  -1, 'day');
-            this.gantt_end = date_utils.add(this.gantt_end, 1, 'day');
-        } else if (this.view_is(['Half Day'])) {
-            this.gantt_start = date_utils.add(this.gantt_start, -14, 'day');
-            this.gantt_end = date_utils.add(this.gantt_end, 14, 'day');
-        } else if (this.view_is(['Day'])) {
-            this.gantt_start = date_utils.add(this.gantt_start, -1, 'month');
-            this.gantt_end = date_utils.add(this.gantt_end, 1, 'month');
-        } else if (this.view_is(['Week'])) {
-            this.gantt_start = date_utils.add(this.gantt_start, -1, 'month');
-            this.gantt_end = date_utils.add(this.gantt_end, 1, 'month');
-        } else if (this.view_is(['Month'])) {
-            this.gantt_start = date_utils.add(this.gantt_start, -6, 'month');
-            this.gantt_end = date_utils.add(this.gantt_end, 6, 'month');
+        if (this.view_is(['Month'])) {
+            this.gantt_start = date_utils.start_of(this.gantt_start, 'year');
+            this.gantt_end = date_utils.add(this.gantt_end, 1, 'year');
         } else if (this.view_is(['Year'])) {
-            this.gantt_start = date_utils.add(this.gantt_start, -10, 'year');
-            this.gantt_end = date_utils.add(this.gantt_end, 10, 'year');
+            this.gantt_start = date_utils.add(this.gantt_start, -2, 'year');
+            this.gantt_end = date_utils.add(this.gantt_end, 2, 'year');
         } else {
             this.gantt_start = date_utils.add(this.gantt_start, -7, 'day');
             this.gantt_end = date_utils.add(this.gantt_end, 7, 'day');
@@ -447,6 +435,11 @@ export default class Gantt {
                 tick_class += ' thick';
             }
 
+            // thick ticks for years
+            if (this.view_is('Month') && date.getMonth() % 12 === 0) {
+                tick_class += ' thick-year';
+            }
+
             createSVG('path', {
                 d: `M ${tick_x} ${tick_y} v ${tick_height}`,
                 class: tick_class,
@@ -494,7 +487,11 @@ export default class Gantt {
     make_dates() {
         for (let date of this.get_dates_to_draw()) {
             createSVG('text', {
-                x: date.lower_x,
+                // number 70 is temporary fix to prevent month names sliding from their column
+                x:
+                    this.options.view_mode !== 'Month'
+                        ? date.lower_x
+                        : date.lower_x + date.lower_x / 70,
                 y: date.lower_y,
                 innerHTML: date.lower_text,
                 class: 'lower-text',
@@ -559,7 +556,9 @@ export default class Gantt {
                 date.getMonth() !== last_date.getMonth()
                     ? date_utils.format(date, 'D MMM', this.options.language)
                     : date_utils.format(date, 'D', this.options.language),
-            Month_lower: date_utils.format(date, 'MMMM', this.options.language),
+            Month_lower: `${date_utils.format(date, 'MMMM', this.options.language)}'${date_utils
+                .format(date, 'YYYY')
+                .slice(-2)}`,
             Year_lower: date_utils.format(date, 'YYYY', this.options.language),
             Hour_upper:
                 date.getDate() !== last_date.getDate()

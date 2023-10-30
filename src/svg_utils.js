@@ -9,7 +9,7 @@ export function createSVG(tag, attrs) {
     for (let attr in attrs) {
         if (attr === 'append_to') {
             const parent = attrs.append_to;
-            parent.appendChild(elem);
+            parent?.appendChild(elem);
         } else if (attr === 'innerHTML') {
             elem.innerHTML = attrs.innerHTML;
         } else {

@@ -146,9 +146,9 @@ export default {
                 hours,
                 days,
                 months,
-                years
-            }[scale]*10
-        )/10;
+                years,
+            }[scale]
+        );
     },
 
     today() {
@@ -234,7 +234,7 @@ export default {
             return 29;
         }
         return 28;
-    }
+    },
 };
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
