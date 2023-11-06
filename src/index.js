@@ -265,15 +265,13 @@ export default class Gantt {
 
         // add date padding on both sides
         if (this.view_is(['Month'])) {
-            this.gantt_start = new Date(
-                date_utils.format(date_utils.add(this.gantt_start, -2, 'month'), 'YYYY MM')
-            );
-            this.gantt_end = date_utils.add(this.gantt_end, 2, 'month');
+            this.gantt_start = date_utils.start_of(this.gantt_start, 'year');
+            this.gantt_end = date_utils.add(this.gantt_end, 1, 'year');
         } else if (this.view_is(['Year'])) {
             this.gantt_start = new Date(
-                date_utils.format(date_utils.add(this.gantt_start, -2, 'year'), 'YYYY')
+                date_utils.format(date_utils.add(this.gantt_start, -5, 'year'), 'YYYY')
             );
-            this.gantt_end = date_utils.add(this.gantt_end, 2, 'year');
+            this.gantt_end = date_utils.add(this.gantt_end, 5, 'year');
         } else {
             this.gantt_start = date_utils.add(this.gantt_start, -7, 'day');
             this.gantt_end = date_utils.add(this.gantt_end, 7, 'day');
@@ -498,7 +496,7 @@ export default class Gantt {
                 append_to: this.layers.header
             });
 
-            if (date.upper_text) {
+            if (date.upper_text && this.options.view_mode !== 'Year') {
                 const $upper_text = createSVG('text', {
                     x: date.upper_x,
                     y: date.upper_y,
