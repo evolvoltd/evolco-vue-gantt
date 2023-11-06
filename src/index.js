@@ -265,10 +265,14 @@ export default class Gantt {
 
         // add date padding on both sides
         if (this.view_is(['Month'])) {
-            this.gantt_start = date_utils.start_of(this.gantt_start, 'year');
-            this.gantt_end = date_utils.add(this.gantt_end, 1, 'year');
+            this.gantt_start = new Date(
+                date_utils.format(date_utils.add(this.gantt_start, -2, 'month'), 'YYYY MM')
+            );
+            this.gantt_end = date_utils.add(this.gantt_end, 2, 'month');
         } else if (this.view_is(['Year'])) {
-            this.gantt_start = date_utils.add(this.gantt_start, -2, 'year');
+            this.gantt_start = new Date(
+                date_utils.format(date_utils.add(this.gantt_start, -2, 'year'), 'YYYY')
+            );
             this.gantt_end = date_utils.add(this.gantt_end, 2, 'year');
         } else {
             this.gantt_start = date_utils.add(this.gantt_start, -7, 'day');
@@ -487,11 +491,7 @@ export default class Gantt {
     make_dates() {
         for (let date of this.get_dates_to_draw()) {
             createSVG('text', {
-                // number 70 is temporary fix to prevent month names sliding from their column
-                x:
-                    this.options.view_mode !== 'Month'
-                        ? date.lower_x
-                        : date.lower_x + date.lower_x / 70,
+                x: date.lower_x,
                 y: date.lower_y,
                 innerHTML: date.lower_text,
                 class: 'lower-text',
@@ -597,6 +597,13 @@ export default class Gantt {
             lower_y: this.options.header_height,
             upper_y: this.options.header_height - 25
         };
+
+        if (this.view_is('Month')) {
+            base_pos.x =
+                (date_utils.diff(date, this.gantt_start, 'day') * this.options.column_width) / 30;
+        } else {
+            base_pos.x = i * this.options.column_width;
+        }
 
         const x_pos = {
 
