@@ -62,16 +62,34 @@ export default class Gantt {
         tableHeadRow.append(tableHead);
         tableElement.append(tableHeadRow);
 
-        rows.forEach((row)=>{
+        rows.forEach((row) => {
             const tableRow = document.createElement('tr');
             tableRow.classList.add('table-row');
             const tableData = document.createElement('td');
             tableData.height = options.bar_height + options.padding;
             tableData.classList.add('table-data');
-            tableData.innerHTML = `${row[`${options.left_column_label}`]}`;
+
+            if (row.hasChildren) {
+                const chevron = document.createElement('span');
+                chevron.classList.add('chevron-down');
+                chevron.innerHTML = '▼';
+                chevron.style.cursor = 'pointer';
+                chevron.style.marginRight = '6px';
+                chevron.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.trigger_event('expand', [row]);
+                });
+                tableData.appendChild(chevron);
+            }
+
+            // Add the row label
+            const labelSpan = document.createElement('span');
+            labelSpan.innerHTML = `${row[`${options.left_column_label}`]}`;
+            tableData.appendChild(labelSpan);
+
             tableRow.appendChild(tableData);
             tableElement.appendChild(tableRow);
-        })
+        });
 
         // wrapper element
         this.$container = document.createElement('div');
@@ -113,7 +131,7 @@ export default class Gantt {
             custom_popup_html: null,
             language: 'en',
             onBarClick: null,
-
+            onExpand: null,
         };
         this.options = Object.assign({}, default_options, options);
     }
