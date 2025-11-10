@@ -69,24 +69,37 @@ export default class Gantt {
             tableData.height = options.bar_height + options.padding;
             tableData.classList.add('table-data');
 
+            // Create a wrapper for chevron and label
+            const contentWrapper = document.createElement('span');
+            contentWrapper.style.display = 'flex';
+            contentWrapper.style.alignItems = 'center';
+            if (row.indent) {
+                contentWrapper.style.marginLeft = row.indent + 'px';
+            }
+
             if (row.hasChildren) {
                 const chevron = document.createElement('span');
                 chevron.classList.add('chevron-down');
-                chevron.innerHTML = '▼';
+                chevron.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6L8 10L12 6" stroke="#555" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+                chevron.style.display = 'inline-flex';
+                chevron.style.verticalAlign = 'middle';
                 chevron.style.cursor = 'pointer';
                 chevron.style.marginRight = '6px';
+                const self = this;
                 chevron.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this.trigger_event('expand', [row]);
+                    if (this.options.onExpand) {
+                        this.options.onExpand(row);
+                    }
                 });
-                tableData.appendChild(chevron);
+                contentWrapper.appendChild(chevron);
             }
 
             // Add the row label
             const labelSpan = document.createElement('span');
             labelSpan.innerHTML = `${row[`${options.left_column_label}`]}`;
-            tableData.appendChild(labelSpan);
+            contentWrapper.appendChild(labelSpan);
 
+            tableData.appendChild(contentWrapper);
             tableRow.appendChild(tableData);
             tableElement.appendChild(tableRow);
         });
