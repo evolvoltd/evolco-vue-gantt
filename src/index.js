@@ -14,7 +14,6 @@ export default class Gantt {
         this.setup_rows(rows);
         // initialize with default view mode
         this.change_view_mode();
-        this.bind_events();
     }
 
     setup_wrapper(element, rows, options) {
@@ -237,7 +236,7 @@ export default class Gantt {
     }
 
     change_view_mode(mode = this.options.view_mode) {
-        document.querySelector('.popup-wrapper').style.display = 'none'
+        this.popup_wrapper.style.display = 'none'
         this.update_view_scale(mode);
         this.setup_dates();
         this.render();
@@ -334,8 +333,10 @@ export default class Gantt {
     }
 
     bind_events() {
+        if (this._events_bound) return;
         this.bind_gantt_events();
         this.bind_grid_click();
+        this._events_bound = true;
         // this.bind_bar_events();
     }
 
@@ -754,9 +755,11 @@ export default class Gantt {
     }
 
     bind_gantt_events() {
-        const scrollElement = document.querySelector('.gantt-container');
-        const stickyHeader = document.querySelector(".gantt-container .header");
-        scrollElement.addEventListener('scroll', () => {stickyHeader.setAttribute('style', `transform: translateY(${scrollElement.scrollTop}px)`)});
+        const scrollElement = this.$container;
+        scrollElement.addEventListener('scroll', () => {
+            const stickyHeader = this.$container.querySelector('.header');
+            if (stickyHeader) stickyHeader.setAttribute('style', `transform: translateY(${scrollElement.scrollTop}px)`);
+        });
     }
 
     bind_bar_events() {

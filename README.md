@@ -66,8 +66,22 @@ If you want to contribute:
 
 1. Clone this repo.
 2. `cd` into project directory
-3. `yarn`
-4. `yarn run dev`
+3. Use Node.js 22.13 or newer in the 22.x series (or Node.js 24+) and npm.
+4. `npm ci`
+5. `npm run dev`
+
+Use npm and commit `package-lock.json` when updating dependencies.
+
+`npm run build` produces `dist/frappe-gantt.js` and
+`dist/frappe-gantt.min.js`, both exposing the browser global `Gantt`, plus
+`dist/frappe-gantt.css`. The build uses Dart Sass.
+
+Bundler consumers continue to import `evolco-vue-gantt` from `src/index.js`,
+which imports `src/gantt.scss`. Configure your application bundler with Dart
+Sass to compile this stylesheet.
+
+Run `npm test` for the date utility tests and `npm run lint` for JavaScript
+checks. `npm pack` builds the distribution before packaging.
 
 License: MIT
 

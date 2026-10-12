@@ -83,8 +83,17 @@
 				progress: 0
 			}
 		]
-		var gantt_chart = new Gantt(".gantt-target", tasks, {
-			on_click: function (task) {
+		var rows = tasks.map(function (task, index) {
+			task.row_id = index;
+			return { title: task.name };
+		});
+		var gantt_chart = new Gantt(".gantt-target", tasks, rows, {
+			left_header_label: 'Tasks',
+			left_column_label: 'title',
+			header_height: 50,
+			bar_height: 20,
+			padding: 18,
+			onBarClick: function (task) {
 				console.log(task);
 			},
 			on_date_change: function(task, start, end) {
